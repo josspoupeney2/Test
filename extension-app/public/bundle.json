@@ -1,0 +1,14 @@
+{
+  "applications": [
+    {
+      "type": "sandbox",
+      "id": "joss1",
+      "name": "joss1",
+      "blurb": "This is template integration app, using React Lib!",
+      "publisher": "Daitan",
+      "url": "https://localhost:4000/controller.html",
+      "domain": "localhost",
+      "iconUrl": "https://localhost:4000/assets/favicon.png"
+    }
+  ]
+}

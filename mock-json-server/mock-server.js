@@ -8,6 +8,9 @@ const {
 const server = jsonServer.create();
 const middlewares = jsonServer.defaults();
 
+const CLIENT_ID = "Iv1.c1733d968e98b178"
+const CLIENT_SECRET = "28f41218457f9ccbdce03292909bdf5d487d2e4e"
+var ACCESS_TOKEN = ""
 // Mock delay, for testing loading states. Units are in ms.
 const MOCK_DELAY = 1000;
 
@@ -28,6 +31,41 @@ server.use((req, res, next) => {
     'Origin, X-Requested-With, Content-Type, Accept',
   );
   next();
+});
+
+server.get('/api/github/authenticate', (req, res) => {
+  res.redirect('https://github.com/login/oauth/authorize?client_id=' + CLIENT_ID);
+})
+
+server.get('/api/github/authorize', async (req, res) => {
+  const payload = await Axios.post(
+    'https://github.com/login/oauth/access_token',
+    {
+      client_id: CLIENT_ID,
+      client_secret: CLIENT_SECRET,
+      code: req.query.code
+    },
+    {
+      headers: {
+        'Accept': 'application/json'
+      }
+    }
+  );
+  console.log('Access token = ' + payload.data.access_token);
+  ACCESS_TOKEN = payload.data.access_token
+  res.redirect('https://localhost:4000');
+});
+
+server.get('/api/github/repos', async (req, res) => {
+  const payload = await Axios.get(
+    'https://api.github.com/user/repos',
+    {
+      headers: {
+        'Authorization': 'token '+ ACCESS_TOKEN
+      }
+    }
+  )
+  res.send(payload.data);
 });
 
 server.post('/api/parser', async (req, res) => {

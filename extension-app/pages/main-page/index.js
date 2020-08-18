@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { Box, NavTabs, HelpPageBuilder } from 'symphony-bdk-ui-toolkit';
 import NotificationPageContainer from 'pages/notification-manage/container';
 import InstanceManagePage from 'pages/instance-page';
+import ProjectsContainer from 'pages/projects-page/container';
 import instanceImage from 'public/assets/instance.gif';
 import notifStep1Image from 'public/assets/n_step1.gif';
 import notifStep2Image from 'public/assets/n_step2.gif';
@@ -90,6 +91,9 @@ const MainPage = (props) => {
           </div>
           <div label="Notifications">
             <NotificationPageContainer instances={instances} />
+          </div>
+          <div label="Projects">
+            <ProjectsContainer />
           </div>
           <div label="Help" align="right">
             <HelpPageBuilder config={PAGE_DATA_TWO_LEVELS} />

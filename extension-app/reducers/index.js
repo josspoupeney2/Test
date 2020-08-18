@@ -5,12 +5,14 @@ import thunk from 'redux-thunk';
 import usersReducer from './users';
 import notifications from './notifications';
 import instances from './instances';
+import projects from './projects';
 import toast from './toast';
 
 const rootReducer = combineReducers({
   user: usersReducer,
   instances,
   notifications,
+  projects,
   toast,
 });
 

@@ -10,6 +10,7 @@ const middlewares = jsonServer.defaults();
 
 const CLIENT_ID = "Iv1.c1733d968e98b178"
 const CLIENT_SECRET = "28f41218457f9ccbdce03292909bdf5d487d2e4e"
+let isAuthenticated = false;
 var ACCESS_TOKEN = ""
 // Mock delay, for testing loading states. Units are in ms.
 const MOCK_DELAY = 1000;
@@ -53,6 +54,7 @@ server.get('/api/github/authorize', async (req, res) => {
   );
   console.log('Access token = ' + payload.data.access_token);
   ACCESS_TOKEN = payload.data.access_token
+  isAuthenticated = true;
   res.redirect('https://localhost:4000');
 });
 
@@ -67,6 +69,10 @@ server.get('/api/github/repos', async (req, res) => {
   )
   res.send(payload.data);
 });
+
+server.get('/api/isAuthenticated', (req, res) => {
+  res.send({'isAuthenticated': isAuthenticated});
+})
 
 server.post('/api/parser', async (req, res) => {
   const payload = await Axios.post('https://renderer-tool.app.symphony.com/api/parser', req.body);
